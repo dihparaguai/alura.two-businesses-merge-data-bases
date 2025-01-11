@@ -21,11 +21,14 @@ class Dados():
             dados = list(dados)
         return dados
 
+    # Função para ler os dados de acordo com a extensão do arquivo ou se os dados já estão em memória
     def leitura_dados(self):
         if self.ext == 'csv':
             dados = self.leitura_csv()
         elif self.ext == 'json':
             dados = self.leitura_json()
+
+        # no caso do join, não é necessário ler um caminho de arquivo, pois os dados já estão em memória
         elif self.ext == 'list':
             dados = self.path
             self.path = 'lista em memoria'
@@ -34,6 +37,7 @@ class Dados():
     def obter_nome_colunas(self):
         return list(self.dados[0].keys())
 
+    # Função para renomear as colunas do objeto, recebendo um dicionário com o mapeamento com as chaves antigas e novas
     def renomear_colunas(self, key_mapping):
         new_dados = []
 
@@ -48,9 +52,11 @@ class Dados():
     def obter_quantidade_registros(self):
         return len(self.dados)
 
+    # Função para realizar o join de dois objetos Dados
     def join_dados(left, right):
         new_dados = []
 
+        # Verifica qual dos dois objetos possui mais colunas para criar o arquivo com todas as colunas
         if len(left.nome_colunas) > len(right.nome_colunas):
             new_dados.extend(left.dados)
             new_dados.extend(right.dados)
@@ -59,8 +65,10 @@ class Dados():
             new_dados.extend(right.dados)
             new_dados.extend(left.dados)
 
+        # Retorna um novo objeto Dados com os dados do join passados como parâmetro o novo objeto Dados no lugar do caminho e a extensão 'list'
         return Dados(new_dados, 'list')
 
+    # Função para transformar a lista de dicionários em uma lista de listas
     def listdict_to_listlist(self):
         new_dados = [self.nome_colunas]
 
@@ -72,8 +80,12 @@ class Dados():
 
         return new_dados
 
+    # Função para salvar os dados em um novo arquivo
     def save_dados(self, new_path):
+
+        # Transforma a lista de dicionários em uma lista de listas
         dados = self.listdict_to_listlist()
+
         with open(new_path, 'w') as file:
             spamwriter = csv.writer(file)
             spamwriter.writerows(dados)
