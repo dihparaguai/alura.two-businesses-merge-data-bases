@@ -92,12 +92,14 @@ print(f'nome das colunas dos dados da empresa B: {get_columns_name(dados_empB)}'
 
 
 # transformação
-key_mapping = {'Nome do Item': 'Nome do Produto',
-               'Classificação do Produto': 'Categoria do Produto',
-               'Valor em Reais (R$)': 'Preço do Produto (R$)',
-               'Quantidade em Estoque': 'Quantidade em Estoque',
-               'Nome da Loja': 'Filial',
-               'Data da Venda': 'Data da Venda'}
+key_mapping = {
+    'Nome do Item': 'Nome do Produto',
+    'Classificação do Produto': 'Categoria do Produto',
+    'Valor em Reais (R$)': 'Preço do Produto (R$)',
+    'Quantidade em Estoque': 'Quantidade em Estoque',
+    'Nome da Loja': 'Filial',
+    'Data da Venda': 'Data da Venda'
+}
 
 dados_empB = rename_columns(dados_empB, key_mapping)
 
